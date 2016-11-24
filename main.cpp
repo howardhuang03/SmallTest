@@ -60,20 +60,36 @@ void print_list(struct s *h) {
 }
 
 void use_s() {
+    int p = 0;
     struct s s1;
     struct s s2;
     struct s s3;
-    struct s s4;
     
-    // Construct a linked list
-    s1.p = &s2;
-    s2.p = &s3;
-    s3.p = NULL;
-    print_list(&s1);
+    while (p < 4) {
+        // Construct a linked list
+        s1.p = &s2;
+        s2.p = &s3;
+        s3.p = NULL;
+        std::cout << "Example " << p + 1 << ":\n";
+        print_list(&s1);
     
-    // Use function
-    s1 = *f(&s1, &s1);
-    print_list(&s1);
+        // Use function
+        switch (p) {
+            case 0:
+                print_list(&(*f(&s1, &s1)));
+                break;
+            case 1:
+                print_list(&(*f(&s1, &s2)));
+                break;
+            case 2:
+                print_list(&(*f(&s1, &s3)));
+                break;
+            case 3:
+                print_list(&(*f(&s2, &s3)));
+                break;
+        }
+        p++;
+    }
 }
 
 void sieve_func(int N) {
@@ -100,7 +116,7 @@ void sieve_func(int N) {
         for (i = 1; i <= N; ++i) {
             if (array[i - 1] > p) {
                 p = array[i - 1];
-                // FIXME:
+                // FIXED:
                 // I make a mistake here in the morning
                 // Use "continue" results in that p will go through to the final number lol.
                 break;
@@ -129,7 +145,7 @@ int main(int argc, const char * argv[]) {
     // Q2
     use_s();
     // Q3
-    sieve_func(20);
+    sieve_func(10);
 
     return 0;
 }
