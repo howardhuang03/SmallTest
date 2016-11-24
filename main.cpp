@@ -25,8 +25,8 @@ unsigned int change_bit(unsigned input) {
     unsigned int result = 0, tmp = input;
     int n = 0;
     while (tmp > 0) {
-        result += mapping[tmp & 0xf] << (2 * n);
-        tmp = tmp >> 2;
+        result += mapping[tmp & 0xf] << (MAP_SIZE * n);
+        tmp = tmp >> MAP_SIZE;
         n++;
     }
 
@@ -39,38 +39,41 @@ struct s *f(struct s *h, struct s *e) {
     while(p) {
         if (p == e) {
             *pp = e -> p;
-            std::cout << "*f 1:" << *pp << "\n";
-            std::cout << "*f h:" << h << "\n";
             return h;
         }
         pp = &(p -> p);
-        std::cout << "*f 2:" << *pp << "\n";
         p = p -> p;
     }
-    std::cout << "*f 2 h:" << h << "\n";
     return h;
 }
 
-struct s use_s() {
+void print_list(struct s *h) {
+    struct s *p = h;
+    while (p) {
+        std::cout << p;
+        p = p -> p;
+        if (p) {
+            std::cout << " -> ";
+        }
+    }
+    std::cout << "\n";
+}
+
+void use_s() {
     struct s s1;
     struct s s2;
     struct s s3;
     struct s s4;
     
+    // Construct a linked list
     s1.p = &s2;
     s2.p = &s3;
     s3.p = NULL;
-
-    std::cout << "s1: " << &s1 << "\n";
-    std::cout << "s2: " << &s2 << "\n";
-    std::cout << "s3: " << &s3 << "\n";
-    std::cout << "s4: " << &s4 << "\n\n";
-    std::cout << s1.p << "\n";
-    std::cout << s2.p << "\n";
-    std::cout << s3.p << "\n";
-    std::cout << s4.p << "\n";
+    print_list(&s1);
     
-    return *f(&s1, &s3);
+    // Use function
+    s1 = *f(&s1, &s1);
+    print_list(&s1);
 }
 
 void sieve_func(int N) {
@@ -120,12 +123,13 @@ void sieve_func(int N) {
 }
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
+    // Q1
     unsigned int target = 1234;
-    struct s res = use_s();
     std::cout << "target: " << target << ", result: " << change_bit(target) << "\n";
-    std::cout << "result: " << res.p << "\n";
-    sieve_func(1000);
+    // Q2
+    use_s();
+    // Q3
+    sieve_func(20);
 
     return 0;
 }
