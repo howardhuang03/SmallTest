@@ -63,6 +63,11 @@ unsigned int change_bit(unsigned input) {
     return result;
 }
 
+unsigned int change_bit_v2(unsigned int input) {
+    unsigned int mask = 0xAAAAAAAA;
+    return ((input & mask) >> 1) | ((input & mask >> 1) << 1);
+}
+
 struct s *f(struct s *h, struct s *e) {
     struct s *p = h;
     struct s **pp = &h;
@@ -170,8 +175,8 @@ void sieve_func(int N) {
 
 int main(int argc, const char * argv[]) {
     // Q1
-    unsigned int target = 1234;
-    std::cout << "target: " << target << ", result: " << change_bit(target) << "\n";
+    unsigned int target = 2863311530;
+    std::cout << "target: " << target << ", result: " << change_bit_v2(target) << "\n";
     // Q2
     use_s();
     // Q3
