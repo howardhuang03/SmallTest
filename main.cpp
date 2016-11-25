@@ -8,18 +8,48 @@
 
 #include <iostream>
 
-#define MAP_SIZE 2
+#define MAP_SIZE    2
+#define FIZZ        3
+#define BUZZ        5
 
 // 00(0) -> 00(0)
 // 01(1) -> 10(2)
 // 10(2) -> 01(1)
 // 11(3) -> 11(3)
 
+using std::cout;
+using std::endl;
+
 struct s {
     struct s *p;
 };
 
 int mapping[] = {0, 2, 1, 3};
+
+void fizz_buzz(int input) {
+    int i = 0, fizz = 0, buzz = 0;
+    for (i = 1; i <= input; ++i) {
+        fizz = 0, buzz = 0;
+
+        if (i % FIZZ == 0) {
+            cout << " Fizz";
+            fizz = 1;
+        }
+
+        if (i % BUZZ == 0) {
+            cout << " Buzz";
+            buzz = 1;
+        }
+
+        if (!fizz && !buzz)
+            cout << " " << i;
+
+        if (i != input) {
+            cout << ",";
+        }
+    }
+    cout << endl;
+}
 
 unsigned int change_bit(unsigned input) {
     unsigned int result = 0, tmp = input;
@@ -146,6 +176,7 @@ int main(int argc, const char * argv[]) {
     use_s();
     // Q3
     sieve_func(10);
+    fizz_buzz(66);
 
     return 0;
 }
