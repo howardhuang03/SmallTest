@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <vector>
 
 #define MAP_SIZE    2
 #define FIZZ        3
@@ -17,8 +18,7 @@
 // 10(2) -> 01(1)
 // 11(3) -> 11(3)
 
-using std::cout;
-using std::endl;
+using namespace std;
 
 struct s {
     struct s *p;
@@ -31,24 +31,57 @@ void fizz_buzz(int input) {
     for (i = 1; i <= input; ++i) {
         fizz = 0, buzz = 0;
 
+		if (i != 1) {
+			cout << ", ";
+		}
+
         if (i % FIZZ == 0) {
-            cout << " Fizz";
+            cout << "Fizz";
             fizz = 1;
         }
 
         if (i % BUZZ == 0) {
-            cout << " Buzz";
+            cout << "Buzz";
             buzz = 1;
         }
 
         if (!fizz && !buzz)
-            cout << " " << i;
-
-        if (i != input) {
-            cout << ",";
-        }
+            cout << i;
     }
     cout << endl;
+}
+
+void fizzBuzz(int n) {
+    vector<string> map;
+    string answer;
+    bool Fizz, Buzz;
+
+    for (int i = 1; i <= n; i++) {
+        answer.clear();
+
+        if (i % 3 == 0) {
+            answer += "Fizz";
+        }
+
+        if (i % 5 == 0) {
+            answer += "Buzz";
+        }
+
+        if (answer.empty()) {
+            answer = std::to_string(i);
+        }
+
+        map.push_back(answer);
+    }
+
+	// Print out the vector's value
+	cout << "myvector contains:" << endl;
+	for (vector<string>::iterator it = map.begin() ; it != map.end(); ++it) {
+        if (it != map.begin())
+			cout << ", ";
+		cout << *it;
+	}
+    cout << '\n';
 }
 
 unsigned int change_bit(unsigned input) {
@@ -181,7 +214,10 @@ int main(int argc, const char * argv[]) {
     use_s();
     // Q3
     sieve_func(10);
-    fizz_buzz(66);
+	// FizzBuzz Question
+	int size = 66;
+    fizz_buzz(size);
+	fizzBuzz(size);
 
     return 0;
 }
